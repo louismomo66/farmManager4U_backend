@@ -20,6 +20,20 @@ func (app *Config) routes() http.Handler {
 		MaxAge:           300,
 	}))
 	mux.Use(middleware.Heartbeat("/ping"))
-	return mux
 
+	// Health check endpoint
+	mux.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	})
+
+	// Authentication routes
+	mux.Route("/api/auth", func(r chi.Router) {
+		r.Post("/signup", app.SignupHandler)
+		r.Post("/login", app.LoginHandler)
+		r.Post("/forgot-password", app.ForgotPasswordHandler)
+		r.Post("/reset-password", app.ResetPasswordHandler)
+	})
+
+	return mux
 }
