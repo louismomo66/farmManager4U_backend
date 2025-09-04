@@ -2,9 +2,10 @@ package main
 
 import (
 	"farm4u/data"
-	"gorm.io/gorm"
 	"log"
 	"sync"
+
+	"gorm.io/gorm"
 )
 
 type Config struct {

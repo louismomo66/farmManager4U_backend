@@ -1,0 +1,11 @@
+Entity Name,Purpose,Attribute Count,Relationships Count
+User,"Represents all users of the system including farmers, employees, and administrators",10,2
+Farm,Represents a farm entity managed by users,8,2
+Crop,Details specific crops grown on a farm,8,1
+Livestock,Details specific livestock raised on a farm,7,1
+Employee,Represents employees managed under HR module,9,2
+Product,Items available for sale in the e-commerce module,11,2
+Order,Represents a customer order in the e-commerce module,8,2
+OrderItem,Junction table for Order and Product relationship,5,1
+MarketListing,Listings for market access where farmers can offer or seek products,10,1
+SensorData,Data collected from remote monitoring sensors on farms,6,1

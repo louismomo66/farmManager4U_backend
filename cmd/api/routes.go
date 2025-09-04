@@ -33,6 +33,16 @@ func (app *Config) routes() http.Handler {
 		r.Post("/login", app.LoginHandler)
 		r.Post("/forgot-password", app.ForgotPasswordHandler)
 		r.Post("/reset-password", app.ResetPasswordHandler)
+		r.Post("/refresh-token", app.JWTMiddleware(app.RefreshTokenHandler))
+	})
+
+	// Farm routes (protected with JWT middleware)
+	mux.Route("/api/farms", func(r chi.Router) {
+		r.Post("/", app.JWTMiddleware(app.CreateFarmHandler))
+		r.Get("/", app.JWTMiddleware(app.GetFarmsHandler))
+		r.Get("/{id}", app.JWTMiddleware(app.GetFarmHandler))
+		r.Put("/{id}", app.JWTMiddleware(app.UpdateFarmHandler))
+		r.Delete("/{id}", app.JWTMiddleware(app.DeleteFarmHandler))
 	})
 
 	return mux

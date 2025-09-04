@@ -29,6 +29,9 @@ type User struct {
 	// OTP fields
 	OTPCode      string    `gorm:"type:varchar(6)" json:"-"`
 	OTPExpiresAt time.Time `json:"-"`
+
+	// Relationships
+	Farms []Farm `gorm:"foreignKey:UserID;references:UserID" json:"farms,omitempty"`
 }
 
 // UserRepo implements UserInterface using GORM.

@@ -13,3 +13,13 @@ type UserInterface interface {
 	VerifyOTP(email, otp string) (bool, error)
 	ResetPasswordWithOTP(email, otp, newPassword string) error
 }
+
+type FarmInterface interface {
+	GetAll() ([]*Farm, error)
+	GetByID(id int) (*Farm, error)
+	GetByUserID(userID string) ([]*Farm, error)
+	Insert(farm *Farm) error
+	Update(farm *Farm) error
+	DeleteByID(id int) error
+	GetByFarmID(farmID string) (*Farm, error)
+}
