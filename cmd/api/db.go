@@ -18,7 +18,13 @@ func (app *Config) initDB() *gorm.DB {
 	}
 
 	// Auto-migrate the schema using actual model structs, not interfaces
-	if err := conn.AutoMigrate(&data.User{}); err != nil {
+	if err := conn.AutoMigrate(
+		&data.User{},
+		&data.Farm{},
+		&data.Crop{},
+		&data.Livestock{},
+		&data.Employee{},
+	); err != nil {
 		log.Panic("failed to migrate database:", err)
 	}
 	log.Println("Database migration completed successfully")
