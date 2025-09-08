@@ -1,0 +1,91 @@
+,,,
+,,,
+Entity: Farm,,,
+Purpose: Represents a farm entity managed by users,,,
+,,,
+Attribute,Type,Description,Key Type
+farmId,String/UUID,Unique identifier for each farm,Primary Key
+ownerId,String/UUID,Links to the User who owns the farm,Foreign Key
+name,String,Name of the farm,-
+location,String,Geographical location or address of the farm,-
+size,Float,Size of the farm in acres or hectares,-
+type,String/Enum,"Type of farming (e.g., Crop, Livestock)",-
+createdAt,Timestamp,Timestamp when the farm was added,-
+updatedAt,Timestamp,Timestamp when the farm details were last updated,-
+,,,
+Relationships:,,,
+A Farm belongs to one User (Many-to-One),,,
+A Farm can have multiple Crops or Livestock (One-to-Many),,,
+,,,
+,,,
+Entity: Crop,,,
+Purpose: Details specific crops grown on a farm,,,
+,,,
+Attribute,Type,Description,Key Type
+cropId,String/UUID,Unique identifier for each crop,Primary Key
+farmId,String/UUID,Links to the Farm where the crop is grown,Foreign Key
+name,String,Name of the crop,-
+plantingDate,Date,Date when the crop was planted,-
+harvestDate,Date,Expected or actual date of harvest,-
+quantity,Float,"Amount planted (e.g., in kilograms or number of plants)",-
+status,String/Enum,"Current status (e.g., Growing, Harvested)",-
+notes,Text,Additional information or observations about the crop,-
+,,,
+Relationships:,,,
+A Crop belongs to one Farm (Many-to-One),,,
+,,,
+,,,
+,,,
+Entity: Livestock,,,
+Purpose: Details specific livestock raised on a farm,,,
+,,,
+Attribute,Type,Description,Key Type
+livestockId,String/UUID,Unique identifier for each livestock entry,Primary Key
+farmId,String/UUID,Links to the Farm where the livestock is raised,Foreign Key
+type,String/Enum,"Type of livestock (e.g., Cattle, Poultry)",-
+count,Integer,Number of animals,-
+acquisitionDate,Date,Date when the livestock was acquired,-
+healthStatus,String/Enum,Current health status of the livestock,-
+notes,Text,Additional information or observations,-
+,,,
+Relationships:,,,
+Livestock belongs to one Farm (Many-to-One),,,
+,,,
+,,,
+Entity: Employee,,,
+Purpose: Represents employees managed under HR module,,,
+,,,
+Attribute,Type,Description,Key Type
+employeeId,String/UUID,Unique identifier for each employee,Primary Key
+userId,String/UUID,Links to the User if the employee has system access,Foreign Key
+farmId,String/UUID,Links to the Farm where the employee works,Foreign Key
+firstName,String,Employee's first name,-
+lastName,String,Employee's last name,-
+position,String,Job title or role within the farm,-
+salary,Float,Compensation details,-
+hireDate,Date,Date of hiring,-
+contactInfo,String,Phone or email for contact,-
+,,,
+Relationships:,,,
+An Employee is linked to one Farm (Many-to-One),,,
+An Employee may be linked to a User account (Many-to-One),,,
+,,,
+,,,
+,,,
+Entity: User,,,
+"Purpose: Represents all users of the system including farmers, employees, and administrators",,,
+,,,
+Attribute,Type,Description,Key Type
+userId,String/UUID,Unique identifier for each user,Primary Key
+firstName,String,User's first name,-
+lastName,String,User's last name,-
+email,String,"User's email address, used for login and communication",-
+passwordHash,String,Securely hashed password for user authentication,-
+role,String/Enum,"Defines the user's role (e.g., Farmer, Employee, Admin)",-
+phoneNumber,String,Contact number for the user,-
+address,String,Physical address of the user,-
+createdAt,Timestamp,Timestamp when the user account was created,-
+updatedAt,Timestamp,Timestamp when the user account was last updated,-
+,,,
+Relationships:,,,
+A User can own multiple Farms (One-to-Many),,,

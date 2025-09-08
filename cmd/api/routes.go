@@ -45,5 +45,32 @@ func (app *Config) routes() http.Handler {
 		r.Delete("/{id}", app.JWTMiddleware(app.DeleteFarmHandler))
 	})
 
+	// Crop routes (protected with JWT middleware)
+	mux.Route("/api/crops", func(r chi.Router) {
+		r.Post("/", app.JWTMiddleware(app.CreateCropHandler))
+		r.Get("/", app.JWTMiddleware(app.GetCropsHandler))
+		r.Get("/{id}", app.JWTMiddleware(app.GetCropHandler))
+		r.Put("/{id}", app.JWTMiddleware(app.UpdateCropHandler))
+		r.Delete("/{id}", app.JWTMiddleware(app.DeleteCropHandler))
+	})
+
+	// Livestock routes (protected with JWT middleware)
+	mux.Route("/api/livestock", func(r chi.Router) {
+		r.Post("/", app.JWTMiddleware(app.CreateLivestockHandler))
+		r.Get("/", app.JWTMiddleware(app.GetLivestocksHandler))
+		r.Get("/{id}", app.JWTMiddleware(app.GetLivestockHandler))
+		r.Put("/{id}", app.JWTMiddleware(app.UpdateLivestockHandler))
+		r.Delete("/{id}", app.JWTMiddleware(app.DeleteLivestockHandler))
+	})
+
+	// Employee routes (protected with JWT middleware)
+	mux.Route("/api/employees", func(r chi.Router) {
+		r.Post("/", app.JWTMiddleware(app.CreateEmployeeHandler))
+		r.Get("/", app.JWTMiddleware(app.GetEmployeesHandler))
+		r.Get("/{id}", app.JWTMiddleware(app.GetEmployeeHandler))
+		r.Put("/{id}", app.JWTMiddleware(app.UpdateEmployeeHandler))
+		r.Delete("/{id}", app.JWTMiddleware(app.DeleteEmployeeHandler))
+	})
+
 	return mux
 }
