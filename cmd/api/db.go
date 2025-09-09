@@ -9,6 +9,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func (app *Config) initDB() *gorm.DB {
@@ -18,6 +19,7 @@ func (app *Config) initDB() *gorm.DB {
 	}
 
 	// Auto-migrate the schema using actual model structs, not interfaces
+	log.Println("Starting database migration...")
 	if err := conn.AutoMigrate(
 		&data.User{},
 		&data.Farm{},
@@ -27,7 +29,7 @@ func (app *Config) initDB() *gorm.DB {
 	); err != nil {
 		log.Panic("failed to migrate database:", err)
 	}
-	log.Println("Database migration completed successfully")
+	log.Println("✅ Database migration completed successfully")
 
 	return conn
 }
@@ -93,6 +95,7 @@ func connectToDB() *gorm.DB {
 func openDB(dsn string) (*gorm.DB, error) {
 	config := &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
+		Logger:                                   logger.Default.LogMode(logger.Info),
 	}
 
 	db, err := gorm.Open(postgres.Open(dsn), config)

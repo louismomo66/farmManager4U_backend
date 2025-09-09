@@ -17,11 +17,14 @@ func main() {
 		}
 	}
 
-	app := Config{}
+	app := Config{
+		InfoLog:  log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile),
+		ErrorLog: log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile),
+	}
 
 	db := app.initDB()
 	if db == nil {
-		log.Fatal("Failed to initialize database")
+		app.ErrorLog.Fatal("Failed to initialize database")
 	}
 
 	// Initialize models
@@ -35,8 +38,12 @@ func main() {
 		Handler: app.routes(),
 	}
 
-	log.Printf("Starting server on port %d", port)
+	app.InfoLog.Printf("Starting Farm Manager 4U API server on port %d", port)
+	app.InfoLog.Printf("Database connected successfully")
+	app.InfoLog.Printf("API endpoints available at http://localhost:%d", port)
+	app.InfoLog.Printf("Health check: http://localhost:%d/health", port)
+
 	if err := srv.ListenAndServe(); err != nil {
-		log.Fatal("Failed to start server:", err)
+		app.ErrorLog.Fatal("Failed to start server:", err)
 	}
 }
