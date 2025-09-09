@@ -43,7 +43,7 @@ func connectToDB() *gorm.DB {
 
 	dbPort := os.Getenv("DB_PORT")
 	if dbPort == "" {
-		dbPort = "5432"
+		dbPort = "5433"
 	}
 
 	dbUser := os.Getenv("DB_USER")
@@ -58,7 +58,7 @@ func connectToDB() *gorm.DB {
 
 	dbName := os.Getenv("DB_NAME")
 	if dbName == "" {
-		dbName = "field_eyes"
+		dbName = "farm_manager_4u"
 	}
 
 	// Construct the DSN string
@@ -92,10 +92,7 @@ func connectToDB() *gorm.DB {
 
 func openDB(dsn string) (*gorm.DB, error) {
 	config := &gorm.Config{
-		// You can add GORM configurations here
-		// For example:
-		// Logger: logger.Default.LogMode(logger.Info),
-		// PrepareStmt: true,
+		DisableForeignKeyConstraintWhenMigrating: true,
 	}
 
 	db, err := gorm.Open(postgres.Open(dsn), config)

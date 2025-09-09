@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Set default port
-	port := 8080
+	port := 9005
 	if envPort := os.Getenv("PORT"); envPort != "" {
 		if p, err := fmt.Sscanf(envPort, "%d", &port); err != nil || p != 1 {
 			log.Printf("Invalid PORT environment variable, using default port %d", port)
