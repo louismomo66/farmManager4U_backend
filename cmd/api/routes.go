@@ -58,9 +58,8 @@ func (app *Config) routes() http.Handler {
 	mux.Route("/api/livestock", func(r chi.Router) {
 		r.Post("/", app.JWTMiddleware(app.CreateLivestockHandler))
 		r.Get("/", app.JWTMiddleware(app.GetLivestocksHandler))
-		r.Get("/{id}", app.JWTMiddleware(app.GetLivestockHandler))
-		r.Put("/{id}", app.JWTMiddleware(app.UpdateLivestockHandler))
-		r.Delete("/{id}", app.JWTMiddleware(app.DeleteLivestockHandler))
+		r.Put("/", app.JWTMiddleware(app.UpdateLivestockHandler))
+		r.Delete("/", app.JWTMiddleware(app.DeleteLivestockHandler))
 	})
 
 	// Employee routes (protected with JWT middleware)
